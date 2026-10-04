@@ -1,0 +1,9 @@
+# © Janus — yashxsanjay
+title = "Janus gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allow placeholder values in .env.example"
+regexes = ['''your-(anon-key|project-ref|key|site-key)-here''']

@@ -1,0 +1,9 @@
+{
+  "name": "Janus",
+  "tagline": "Proof of work → hiring.",
+  "markId": "yashxsanjay",
+  "watermarkMetaName": "janus-wm",
+  "fallbackNames": ["Kymra", "Krasyn"],
+  "grievanceEmail": "grievance@janus.app",
+  "minAge": 18
+}

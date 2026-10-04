@@ -1,0 +1,31 @@
+{
+  "plans": [
+    {
+      "id": "free",
+      "name": "Free",
+      "price_inr": 0,
+      "features": {
+        "max_demos": 10,
+        "max_active_jobs": 1,
+        "featured_placement": false,
+        "applicant_export": false,
+        "analytics": false,
+        "verified_badge": false
+      }
+    },
+    {
+      "id": "pro",
+      "name": "Pro",
+      "price_inr": null,
+      "note": "Price TBD — ask 10-15 companies before setting this",
+      "features": {
+        "max_demos": -1,
+        "max_active_jobs": -1,
+        "featured_placement": true,
+        "applicant_export": true,
+        "analytics": true,
+        "verified_badge": false
+      }
+    }
+  ]
+}

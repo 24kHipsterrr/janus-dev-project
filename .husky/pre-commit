@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+# © Janus — yashxsanjay
+
+# Check for secret leaks before committing
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks protect --staged --redact
+else
+  echo "⚠️  gitleaks not found. Install it to enable secret scanning:"
+  echo "   brew install gitleaks"
+fi
+
+# Run lint
+pnpm lint

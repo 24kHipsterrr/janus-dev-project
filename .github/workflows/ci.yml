@@ -1,0 +1,73 @@
+# © Janus — yashxsanjay
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-test-build:
+    name: Lint, Test & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Scan for secrets (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Unit tests
+        run: pnpm test
+        env:
+          VITE_SUPABASE_URL: https://placeholder.supabase.co
+          VITE_SUPABASE_ANON_KEY: placeholder-anon-key
+
+      - name: Build
+        run: pnpm build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_POSTHOG_KEY: ${{ secrets.VITE_POSTHOG_KEY }}
+          VITE_POSTHOG_HOST: ${{ secrets.VITE_POSTHOG_HOST }}
+          VITE_TURNSTILE_SITE_KEY: ${{ secrets.VITE_TURNSTILE_SITE_KEY }}
+
+      - name: Security audit
+        # --ignore-unfixable skips advisories with no patched version (e.g. braces
+        # via tailwindcss, GHSA-vfj7-8cjw-p6xm). They will resurface automatically
+        # once an upstream patch is released.
+        run: pnpm audit --audit-level high --ignore-unfixable
+        continue-on-error: false
+
+  # Runs on main only — keeps janus-dev project alive (free plan pauses after 1 week idle)
+  keep-alive:
+    name: Supabase keep-alive ping
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Ping Supabase health endpoint
+        run: |
+          curl -sf "${{ secrets.VITE_SUPABASE_URL }}/rest/v1/?apikey=${{ secrets.VITE_SUPABASE_ANON_KEY }}" || true

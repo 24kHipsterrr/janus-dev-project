@@ -1,0 +1,39 @@
+/* © Janus — yashxsanjay */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    @apply border-border box-border;
+  }
+
+  body {
+    @apply bg-base text-text antialiased min-h-screen;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand ring-offset-2 ring-offset-base;
+  }
+
+  ::selection {
+    @apply bg-brand/30 text-text;
+  }
+}
+
+@layer utilities {
+  .brand-gradient {
+    background: linear-gradient(135deg, #4f6ef7 0%, #818cf8 100%);
+  }
+
+  .brand-gradient-text {
+    background: linear-gradient(135deg, #4f6ef7 0%, #818cf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}

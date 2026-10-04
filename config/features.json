@@ -1,0 +1,8 @@
+{
+  "profiles.enabled": true,
+  "demos.enabled": false,
+  "feed.enabled": false,
+  "jobs.enabled": false,
+  "messaging.enabled": false,
+  "stories.enabled": false
+}

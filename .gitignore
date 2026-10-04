@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build
+dist/
+dist-ssr/
+
+# Env files — NEVER commit real values
+.env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+pnpm-debug.log*
+*.log
+
+# Editor
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Supabase local
+supabase/.temp/
+supabase/.branches/
+
+# Test artifacts
+playwright-report/
+test-results/
+coverage/
+
+# Husky
+.husky/_
